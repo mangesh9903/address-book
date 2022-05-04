@@ -3,7 +3,8 @@
 // UC3 - Ability to create a New Address Book array and add new Contacts to it.
 // UC4 - Ability to find existing contact person using their name and edit it.
 // UC5 - Ability to find a person with name delete it from the array.
-
+// UC6 - Ability to ensure there is no Duplicate Entry of the same Person in the Address Book.
+// UC7 - Ability to ensure there is no Duplicate Entry of the same Person in the Address Book.
 const prompt = require('prompt-sync')();
 
 const NAME_REGEX = RegExp("^[A-Z]{1}[a-z]{2,}$");
@@ -88,8 +89,13 @@ viewContacts = () => {
 }
 
 let addContact = (contact) => {
-    addressBookArray.push(contact);
-    console.log("Contact Added Successfully!!");
+    let resultIndex = getIndexByName(contact.firstName, contact.lastName);
+    if (resultIndex == -1) {
+        addressBookArray.push(contact);
+        console.log("Contact Added Successfully!!");
+    } else {
+        console.log("Could not add contact as Name already exists!!");
+    }
 }
 
 let editContact = () => {
