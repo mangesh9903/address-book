@@ -1,6 +1,7 @@
 // UC1 - Ability to create a Address Book Contact with first and last names, address, city, state, zip, phone number and email...
 // UC2 - Ability to ensure Valid Contacts are added...
-// Uc3 - Ability to create a New Address Book array and add new Contacts to it.
+// UC3 - Ability to create a New Address Book array and add new Contacts to it.
+// UC4 - Ability to find existing contact person using their name and edit it.
 
 const prompt = require('prompt-sync')();
 
@@ -74,7 +75,6 @@ let getContact = () => {
 
     try {
         contactInput = new AddressBook(firstName, lastName, address, city, state, zipCode, phoneNumber, email);
-        console.log(contactInput.toString());
     }
     catch (error) {
         console.error(error);
@@ -82,19 +82,38 @@ let getContact = () => {
     return contactInput;
 };
 
+viewContacts = () => {
+    addressBookArray.forEach(contact => console.log(contact.toString()));
+}
+
 let addContact = (contact) => {
     addressBookArray.push(contact);
     console.log("Contact Added Successfully!!");
 }
 
+let editContact = () =>{
+    let firstName = prompt("Enter First Name : ");
+    let lastName = prompt("Enter Last Name : ");
+    let resultIndex = addressBookArray.findIndex(contact => contact.firstName == firstName && contact.lastName == lastName);
+    if(resultIndex == -1){
+        console.log("Contact not Exists.")
+    }else{
+        addressBookArray[resultIndex] = getContact();
+        console.log("Contact updated successfully!!")
+    }
+}
+
 console.log(" Welcome to Address Book Application.")
 while (true) {
-    console.log("Menu\n1. Add Contact\n2. Exit");
+    console.log("Menu\n1. Add Contact\n2. View Contacts\n3.Edit Contact");
     let choice = prompt("Enter your choice : ");
     switch (choice) {
         case "1": addContact(getContact());
             break;
-        case "2": break;
+        case "2": viewContacts();
+        break;
+        case "3": editContact();
+        break;
         default: console.log("Invalid Choice!!!");
             break;
     }
