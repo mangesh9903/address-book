@@ -1,5 +1,8 @@
 // UC1 - Ability to create a Address Book Contact with first and last names, address, city, state, zip, phone number and email...
 // UC2 - Ability to ensure Valid Contacts are added...
+// Uc3 - Ability to create a New Address Book array and add new Contacts to it.
+
+const prompt = require('prompt-sync')();
 
 const NAME_REGEX = RegExp("^[A-Z]{1}[a-z]{2,}$");
 const ADDRESS_STATE_CITY_REGEX = RegExp("^[A-Za-z]{4,}$");
@@ -57,5 +60,45 @@ class AddressBook {
     }
 }
 
-let addressBook = new AddressBook("Mangesh", "Bhujang", "Akurdi", "Pune", "Maharashtra", "421133", "91-7620263999", "mangeshb9903@gmail.com");
-console.log(addressBook.toString());
+let addressBookArray = new Array();
+let getContact = () => {
+    let firstName = prompt("Enter First Name : ");
+    let lastName = prompt("Enter Last Name :");
+    let address = prompt("Enter Address :");
+    let city = prompt("Enter City :");
+    let state = prompt("Enter State :");
+    let zipCode = prompt("Enter Zip Code :");
+    let phoneNumber = prompt("Enter Phone Number :");
+    let email = prompt("Enter Email :");
+    let contactInput = null;
+
+    try {
+        contactInput = new AddressBook(firstName, lastName, address, city, state, zipCode, phoneNumber, email);
+        console.log(contactInput.toString());
+    }
+    catch (error) {
+        console.error(error);
+    }
+    return contactInput;
+};
+
+let addContact = (contact) => {
+    addressBookArray.push(contact);
+    console.log("Contact Added Successfully!!");
+}
+
+console.log(" Welcome to Address Book Application.")
+while (true) {
+    console.log("Menu\n1. Add Contact\n2. Exit");
+    let choice = prompt("Enter your choice : ");
+    switch (choice) {
+        case "1": addContact(getContact());
+            break;
+        case "2": break;
+        default: console.log("Invalid Choice!!!");
+            break;
+    }
+}
+
+
+
