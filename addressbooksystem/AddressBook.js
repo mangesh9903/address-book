@@ -2,6 +2,7 @@
 // UC2 - Ability to ensure Valid Contacts are added...
 // UC3 - Ability to create a New Address Book array and add new Contacts to it.
 // UC4 - Ability to find existing contact person using their name and edit it.
+// UC5 - Ability to find a person with name delete it from the array.
 
 const prompt = require('prompt-sync')();
 
@@ -91,29 +92,49 @@ let addContact = (contact) => {
     console.log("Contact Added Successfully!!");
 }
 
-let editContact = () =>{
+let editContact = () => {
     let firstName = prompt("Enter First Name : ");
     let lastName = prompt("Enter Last Name : ");
     let resultIndex = addressBookArray.findIndex(contact => contact.firstName == firstName && contact.lastName == lastName);
-    if(resultIndex == -1){
+    if (resultIndex == -1) {
         console.log("Contact not Exists.")
-    }else{
+    } else {
         addressBookArray[resultIndex] = getContact();
         console.log("Contact updated successfully!!")
     }
 }
 
+let getIndexByName = (firstName, lastName) => {
+    return addressBookArray.findIndex(contact => contact.firstName == firstName && contact.lastName == lastName);
+}
+
+
+let deleteContact = () => {
+    let firstName = prompt("Enter First Name : ");
+    let lastName = prompt("Enter Lastt Name : ");
+    let index = getIndexByName(firstName, lastName);
+    if (index == -1)
+        console.log("Contact not Exists.")
+    else {
+        console.log("Contact deleted successfully!!");
+        return addressBookArray.splice(index, 1);
+
+    }
+}
+
 console.log(" Welcome to Address Book Application.")
 while (true) {
-    console.log("Menu\n1. Add Contact\n2. View Contacts\n3.Edit Contact");
+    console.log("Menu\n1. Add Contact\n2. View Contacts\n3.Edit Contact\n4. Delete Contact");
     let choice = prompt("Enter your choice : ");
     switch (choice) {
         case "1": addContact(getContact());
             break;
         case "2": viewContacts();
-        break;
+            break;
         case "3": editContact();
-        break;
+            break;
+        case "4": deleteContact();
+            break;
         default: console.log("Invalid Choice!!!");
             break;
     }
