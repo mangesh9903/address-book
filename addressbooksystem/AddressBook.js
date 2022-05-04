@@ -122,9 +122,11 @@ let deleteContact = () => {
     }
 }
 
+let getTotalContactCount = () => addressBookArray.reduce((total, contact) => total + 1, 0);
+
 console.log(" Welcome to Address Book Application.")
 while (true) {
-    console.log("Menu\n1. Add Contact\n2. View Contacts\n3.Edit Contact\n4. Delete Contact");
+    console.log("Menu\n1. Add Contact\n2. View Contacts\n3.Edit Contact\n4. Delete Contact\n5. Get Total Contact Count");
     let choice = prompt("Enter your choice : ");
     switch (choice) {
         case "1": addContact(getContact());
@@ -134,6 +136,8 @@ while (true) {
         case "3": editContact();
             break;
         case "4": deleteContact();
+            break;
+        case "5": console.log(" Total Contacts Present In Array is : " + getTotalContactCount());
             break;
         default: console.log("Invalid Choice!!!");
             break;
